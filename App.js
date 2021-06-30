@@ -42,7 +42,9 @@ export default function App() {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => setIsAddNewBookVisible(false)}
+                    >
                         <View
                             style={{
                                 width: 50,
