@@ -5,10 +5,14 @@ import {Ionicons} from '@expo/vector-icons';
 import BookCount from "./components/BookCount";
 
 export default function App() {
-    const [totalCount, setTotalCount] = useState(0);
+    let [totalCount, setTotalCount] = useState(0);
     const [readingCount, setReadingCount] = useState(0);
     const [readCount, setReadCount] = useState(0);
     const [isAddNewBookVisible, setIsAddNewBookVisible] = useState(false);
+    const [textInputData, setTextInputData] = useState('');
+    const [books, addBook] = useState([]);
+
+
     return (
         <View style={{flex: 1}}>
             <SafeAreaView/>
@@ -25,11 +29,17 @@ export default function App() {
                 {isAddNewBookVisible && (
                 <View style={{height: 50, flexDirection: 'row'}}>
                     <TextInput
+                        onChangeText={(text) => setTextInputData(text)}
                         style={{flex: 1, backgroundColor: '#ececec', paddingLeft: 5}}
                         placeholder='Enter Book Name'
                         placeholderTextColor='grey'
                     />
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        addBook((books) => [...books, textInputData]);
+                        setTotalCount((count) => count + 1);
+                        setReadingCount((count) => count + 1);
+                        console.log('mic test', totalCount, readingCount)
+                    }}>
                         <View
                             style={{
                                 width: 50,
@@ -38,7 +48,8 @@ export default function App() {
                                 alignItems: 'center',
                                 justifyContent: 'center'
                             }}>
-                            <Ionicons name='ios-checkmark' color='white' size={40}/>
+                            <Ionicons
+                                name='ios-checkmark' color='white' size={40}/>
                         </View>
                     </TouchableOpacity>
 
@@ -89,6 +100,8 @@ export default function App() {
         </View>
     );
 };
+
+
 
 const styles = StyleSheet.create({
     container: {
