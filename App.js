@@ -1,8 +1,9 @@
 import {StatusBar} from 'expo-status-bar';
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView} from 'react-native';
+import {StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, FlatList} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import BookCount from "./components/BookCount";
+
 
 export default function App() {
     let [totalCount, setTotalCount] = useState(0);
@@ -69,6 +70,43 @@ export default function App() {
                     </TouchableOpacity>
                 </View>
                 )}
+
+                <FlatList
+                    data={books}
+                    renderItem={({item}) =>
+                        <View style={{height: 50, flexDirection: 'row'}}>
+                            <View style={{flex: 1, justifyContent: 'center', paddingLeft: 5}}>
+                                <Text>{item}</Text>
+                            </View>
+                            <TouchableOpacity onPress={() => {
+                                addBook((books) => [...books, textInputData]);
+                                setTotalCount((count) => count + 1);
+                                setReadingCount((count) => count + 1);
+                                console.log('mic test', totalCount, readingCount)
+                            }}>
+                                <View
+                                    style={{
+                                        width: 100,
+                                        height: 50,
+                                        backgroundColor: '#a5deba',
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}>
+                                    <Text style={{fontWeight: 'bold', color: 'white'}}
+                                    >Mark as read</Text>
+                                </View>
+                            </TouchableOpacity>
+
+                        </View>
+
+                    }
+                    keyExtractor={(item, index) => index.toString()}
+                    ListEmptyComponent={
+                        <View style={{marginTop: 50, alignItems: 'center'}}>
+                            <Text style={{fontWeight: 'bold'}}>Not Reading Any Book</Text>
+                        </View>
+                    }
+                        />
                 <TouchableOpacity
                     onPress={() => setIsAddNewBookVisible(true)}
                     style={{position: 'absolute', bottom: 20, right: 20}}>
