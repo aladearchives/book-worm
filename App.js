@@ -4,6 +4,7 @@ import {StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, FlatL
 import {Ionicons} from '@expo/vector-icons';
 import BookCount from "./components/BookCount";
 import CustomActionButton from "./components/CustomActionButton";
+import colors from "./assets/colors";
 
 export default function App() {
     let [totalCount, setTotalCount] = useState(0);
@@ -23,7 +24,7 @@ export default function App() {
             <SafeAreaView/>
             <View style={{
                 borderBottomWidth: 0.5,
-                borderBottomColor: '#E9E9E9',
+                borderBottomColor: colors.borderColor,
                 height: 70,
                 justifyContent: 'center',
                 alignItems: 'center'
@@ -35,12 +36,12 @@ export default function App() {
                     <View style={{height: 50, flexDirection: 'row'}}>
                         <TextInput
                             onChangeText={(text) => setTextInputData(text)}
-                            style={{flex: 1, backgroundColor: '#ececec', paddingLeft: 5}}
+                            style={{flex: 1, backgroundColor: colors.bgTextInput, paddingLeft: 5}}
                             placeholder='Enter Book Name'
-                            placeholderTextColor='grey'
+                            placeholderTextColor={colors.txtPlaceholder}
                         />
 
-                        <CustomActionButton style={{backgroundColor: '#a5deba'}} onPress={
+                        <CustomActionButton style={{backgroundColor: colors.bgSuccess}} onPress={
                             () => {
                                 setBooks((books) => [...books, textInputData]);
                                 setTotalCount((count) => count + 1);
@@ -71,7 +72,7 @@ export default function App() {
                             <View style={{flex: 1, justifyContent: 'center', paddingLeft: 5}}>
                                 <Text>{item}</Text>
                             </View>
-                            <CustomActionButton style={{backgroundColor: '#a5deba', width: 100}}
+                            <CustomActionButton style={{backgroundColor: colors.bgSuccess, width: 100}}
                                                 onPress={({item, index}) => {
                                                     const newList = []
                                                     books.forEach((book) => {
@@ -99,6 +100,7 @@ export default function App() {
                         </View>
                     }
                 />
+
                 <TouchableOpacity
                     onPress={() => setIsAddNewBookVisible(true)}
                     style={{position: 'absolute', bottom: 20, right: 20}}>
@@ -107,7 +109,7 @@ export default function App() {
                             width: 50,
                             height: 50,
                             borderRadius: 25,
-                            backgroundColor: '#AAD1E6',
+                            backgroundColor: colors.bgPrimary,
                             alignItems: 'center',
                             justifyContent: 'center'
                         }}>
@@ -118,7 +120,7 @@ export default function App() {
             </View>
             <View style={{
                 borderTopWidth: 0.5,
-                borderTopColor: '#E9E9E9',
+                borderTopColor: colors.borderColor,
                 height: 70,
                 flexDirection: 'row'
             }}>
