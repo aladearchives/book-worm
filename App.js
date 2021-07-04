@@ -32,52 +32,52 @@ export default function App() {
             </View>
             <View style={[{flex: 1}]}>
                 {isAddNewBookVisible && (
-                <View style={{height: 50, flexDirection: 'row'}}>
-                    <TextInput
-                        onChangeText={(text) => setTextInputData(text)}
-                        style={{flex: 1, backgroundColor: '#ececec', paddingLeft: 5}}
-                        placeholder='Enter Book Name'
-                        placeholderTextColor='grey'
-                    />
-                    <TouchableOpacity onPress={() => {
-                        setBooks((books) => [...books, textInputData]);
-                        setTotalCount((count) => count + 1);
-                        setReadingCount((count) => count + 1);
-                        setIsAddNewBookVisible(false)
-                        setBookData({
-                            ...bookData,
-                            author: 'kkdd'
-                        })
-                        console.log(bookData)
-                    }}>
-                        <View
-                            style={{
-                                width: 50,
-                                height: 50,
-                                backgroundColor: '#a5deba',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }}>
-                            <Ionicons
-                                name='ios-checkmark' color='white' size={40}/>
-                        </View>
-                    </TouchableOpacity>
+                    <View style={{height: 50, flexDirection: 'row'}}>
+                        <TextInput
+                            onChangeText={(text) => setTextInputData(text)}
+                            style={{flex: 1, backgroundColor: '#ececec', paddingLeft: 5}}
+                            placeholder='Enter Book Name'
+                            placeholderTextColor='grey'
+                        />
+                        <TouchableOpacity onPress={() => {
+                            setBooks((books) => [...books, textInputData]);
+                            setTotalCount((count) => count + 1);
+                            setReadingCount((count) => count + 1);
+                            setIsAddNewBookVisible(false)
+                            setBookData({
+                                ...bookData,
+                                author: 'kkdd'
+                            })
+                            console.log(bookData)
+                        }}>
+                            <View
+                                style={{
+                                    width: 50,
+                                    height: 50,
+                                    backgroundColor: '#a5deba',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}>
+                                <Ionicons
+                                    name='ios-checkmark' color='white' size={40}/>
+                            </View>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity
-                        onPress={() => setIsAddNewBookVisible(false)}
-                    >
-                        <View
-                            style={{
-                                width: 50,
-                                height: 50,
-                                backgroundColor: '#deada5',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }}>
-                            <Ionicons name='ios-close' color='white' size={40}/>
-                        </View>
-                    </TouchableOpacity>
-                </View>
+                        <TouchableOpacity
+                            onPress={() => setIsAddNewBookVisible(false)}
+                        >
+                            <View
+                                style={{
+                                    width: 50,
+                                    height: 50,
+                                    backgroundColor: '#deada5',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}>
+                                <Ionicons name='ios-close' color='white' size={40}/>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 )}
 
                 <FlatList
@@ -90,14 +90,11 @@ export default function App() {
                             <TouchableOpacity onPress={({item, index}) => {
                                 const newList = []
                                 books.forEach((book) => {
-                                    console.log(books.indexOf(book), index)
-
-                                        if (books.indexOf(book) !== index) {
+                                    if (books.indexOf(book) !== index) {
                                         newList.push(book);
                                     }
                                 })
 
-                                console.log(newList, item)
                                 setBooks(newList);
                                 setReadingCount((readingCount) => readingCount - 1);
                                 setReadCount((readCount) => readCount + 1);
@@ -125,7 +122,7 @@ export default function App() {
                             <Text style={{fontWeight: 'bold'}}>Not Reading Any Book</Text>
                         </View>
                     }
-                        />
+                />
                 <TouchableOpacity
                     onPress={() => setIsAddNewBookVisible(true)}
                     style={{position: 'absolute', bottom: 20, right: 20}}>
@@ -157,7 +154,6 @@ export default function App() {
         </View>
     );
 };
-
 
 
 const styles = StyleSheet.create({
