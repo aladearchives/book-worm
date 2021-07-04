@@ -11,7 +11,7 @@ export default function App() {
     const [readCount, setReadCount] = useState(0);
     const [isAddNewBookVisible, setIsAddNewBookVisible] = useState(false);
     const [textInputData, setTextInputData] = useState('');
-    const [books, addBook] = useState([]);
+    const [books, setBooks] = useState([]);
 
 
     return (
@@ -36,10 +36,10 @@ export default function App() {
                         placeholderTextColor='grey'
                     />
                     <TouchableOpacity onPress={() => {
-                        addBook((books) => [...books, textInputData]);
+                        setBooks((books) => [...books, textInputData]);
                         setTotalCount((count) => count + 1);
                         setReadingCount((count) => count + 1);
-                        console.log('mic test', totalCount, readingCount)
+                        setIsAddNewBookVisible(false)
                     }}>
                         <View
                             style={{
@@ -78,12 +78,22 @@ export default function App() {
                             <View style={{flex: 1, justifyContent: 'center', paddingLeft: 5}}>
                                 <Text>{item}</Text>
                             </View>
-                            <TouchableOpacity onPress={() => {
-                                addBook((books) => [...books, textInputData]);
-                                setTotalCount((count) => count + 1);
-                                setReadingCount((count) => count + 1);
-                                console.log('mic test', totalCount, readingCount)
-                            }}>
+                            <TouchableOpacity onPress={({item, index}) => {
+                                const newList = []
+                                books.forEach((book) => {
+                                    console.log(books.indexOf(book), index)
+
+                                        if (books.indexOf(book) !== index) {
+                                        newList.push(book);
+                                    }
+                                })
+
+                                console.log(newList, item)
+                                setBooks(newList);
+                                setReadingCount((readingCount) => readingCount - 1);
+                                setReadCount((readCount) => readCount + 1);
+                            }
+                            }>
                                 <View
                                     style={{
                                         width: 100,
