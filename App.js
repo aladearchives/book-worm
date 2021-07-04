@@ -12,6 +12,10 @@ export default function App() {
     const [isAddNewBookVisible, setIsAddNewBookVisible] = useState(false);
     const [textInputData, setTextInputData] = useState('');
     const [books, setBooks] = useState([]);
+    const [bookData, setBookData] = useState({
+        author: '',
+        publisher: ''
+    });
 
 
     return (
@@ -40,6 +44,11 @@ export default function App() {
                         setTotalCount((count) => count + 1);
                         setReadingCount((count) => count + 1);
                         setIsAddNewBookVisible(false)
+                        setBookData({
+                            ...bookData,
+                            author: 'kkdd'
+                        })
+                        console.log(bookData)
                     }}>
                         <View
                             style={{
