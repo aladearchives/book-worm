@@ -3,8 +3,10 @@ const colors = {
     bgError: '#deada5',
     bgPrimary: '#AAD1E6',
     bgTextInput: '#ececec',
+    bgMain: '#2E424D',
     txtPlaceholder: 'grey',
-    borderColor: '#E9E9E9'
+    borderColor: '#E9E9E9',
+    logoColor: '#bada55'
 }
 
 export default colors;
