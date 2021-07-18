@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {Text, View, Platform, SafeAreaView} from 'react-native';
+import {Text, View} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import colors from "../../assets/colors";
 import {DrawerItems} from "react-navigation";
-  import {ScrollView} from "react-native-gesture-handler";
+import {Platform, SafeAreaView} from "react-native-web";
+import {ScrollView} from "react-native-gesture-handler";
 
 export default function CustomDrawerComponent(props) {
 

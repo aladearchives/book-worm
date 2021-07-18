@@ -19,11 +19,18 @@ export default function WelcomeScreen(props) {
                     backgroundColor: 'transparent',
                     borderColor: colors.bgPrimary,
                     marginBottom: 10
-                }} title='Log In' onPress={() => props.navigation.navigate('LoginScreen')}>
+                }} title='Log In' onPress={() => props.navigation.navigate('HomeScreen')}>
                     <Text style={{fontWeight: '100', color: 'white'}}>Login</Text>
                 </CustomActionButton>
 
-
+                <CustomActionButton style={{
+                    width: 200,
+                    borderWidth: 0.5,
+                    backgroundColor: 'transparent',
+                    borderColor: colors.bgError
+                }} title='Sign up' onPress={() => props.navigation.navigate('SignUpScreen')}>
+                    <Text style={{fontWeight: '100', color: 'white'}}>Sign Up</Text>
+                </CustomActionButton>
             </View>
         </View>)
 }
