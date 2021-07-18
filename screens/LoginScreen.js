@@ -42,7 +42,7 @@ export default function LoginScreen() {
 
                 if (response) {
                     setIsLoading(false)
-                    this.props.navigation.navigate()
+                    this.props.navigation.navigate('LoadingScreen')
                 }
             } catch (error) {
                 setIsLoading(false)
