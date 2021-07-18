@@ -3,7 +3,6 @@ import {StyleSheet, Text, View, TextInput, ActivityIndicator} from 'react-native
 import colors from "../assets/colors";
 import CustomActionButton from "../components/CustomActionButton";
 import firebase from "firebase/app";
-import 'firebase/auth';
 
 
 export default function LoginScreen() {
@@ -20,7 +19,10 @@ export default function LoginScreen() {
                     .createUserWithEmailAndPassword(email, password);
                 if (response) {
                     setIsLoading(false);
-                    onSignIn(email, password)
+                    // sign in the user
+                    const user = await firebase.database().ref('users/').child(response.user.uid)
+                        .set({email: response.user.email, uid: response.user.uid})
+                    this.props.navigation.navigate('LoadingScreen')
                 }
             } catch (error) {
                 setIsLoading(false)
