@@ -1,21 +1,29 @@
-import {StatusBar} from 'expo-status-bar';
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, FlatList} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import BookCount from "../components/BookCount";
 import CustomActionButton from "../components/CustomActionButton";
 import colors from "../assets/colors";
+import firebase from "firebase/app";
 
 export default function HomeScreen() {
-    let [totalCount, setTotalCount] = useState(0);
-    const [readingCount, setReadingCount] = useState(0);
-    const [readCount, setReadCount] = useState(0);
     const [isAddNewBookVisible, setIsAddNewBookVisible] = useState(false);
     const [textInputData, setTextInputData] = useState('');
     const [books, setBooks] = useState([]);
     const [booksReading, setBooksReading] = useState([]);
     const [booksRead, setBooksRead] = useState([]);
+    const [currentUser, setCurrentUser] = useState({});
 
+    useEffect(async () => {
+        const {navigation} = this.props;
+        const user = navigation.getParam('user');
+        const currentUserData = await firebase.database()
+            .ref('users')
+            .child(user.uid)
+            .once('value')
+        setCurrentUser(currentUserData.val())
+
+    }, [])
 
     return (
         <View style={{flex: 1}}>
@@ -40,12 +48,35 @@ export default function HomeScreen() {
                         />
 
                         <CustomActionButton style={{backgroundColor: colors.bgSuccess}} onPress={
-                            () => {
-                                setBooks((books) => [...books, textInputData]);
-                                setBooksReading((books) => [...books, textInputData])
-                                setTotalCount((count) => count + 1);
-                                setReadingCount((count) => count + 1);
-                                setIsAddNewBookVisible(false)
+                            async () => {
+                                try {
+                                    const snapshot = await firebase.database()
+                                        .ref('books')
+                                        .child(currentUser.uid)
+                                        .orderByChild('name')
+                                        .equalTo(textInputData).once('value');
+
+                                    if (snapshot.exists()) {
+                                        alert('This book already exists')
+                                    } else {
+                                        const key = await firebase.database()
+                                            .ref('books')
+                                            .child(currentUser.uid)
+                                            .push()
+                                            .key;
+
+                                        const response = await firebase.database()
+                                            .ref('books')
+                                            .child(key).set({name: textInputData, read: false});
+
+                                        setBooks((books) => [...books, textInputData]);
+                                        setBooksReading((books) => [...books, textInputData])
+                                        setIsAddNewBookVisible(false);
+                                    }
+                                } catch (error){
+                                    console.log(error)
+                                }
+
                             }
                         }>
                             <Ionicons name='ios-checkmark' color='white' size={40}/>
@@ -85,9 +116,7 @@ export default function HomeScreen() {
 
                                                     setBooks(newList);
                                                     setBooksReading(booksReading);
-                                                    setBooksRead([...booksRead, selectedBook])
-                                                    // setReadingCount((readingCount) => readingCount - 1);
-                                                    // setReadCount((readCount) => readCount + 1);
+                                                    setBooksRead([...booksRead, selectedBook]);
                                                 }
                                                 }>
                                 <Text style={{fontWeight: 'bold', color: 'white'}}
