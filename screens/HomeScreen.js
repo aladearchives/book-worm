@@ -13,10 +13,8 @@ export default function HomeScreen() {
     const [isAddNewBookVisible, setIsAddNewBookVisible] = useState(false);
     const [textInputData, setTextInputData] = useState('');
     const [books, setBooks] = useState([]);
-    const [bookData, setBookData] = useState({
-        author: '',
-        publisher: ''
-    });
+    const [booksReading, setBooksReading] = useState([]);
+    const [booksRead, setBooksRead] = useState([]);
 
 
     return (
@@ -44,13 +42,10 @@ export default function HomeScreen() {
                         <CustomActionButton style={{backgroundColor: colors.bgSuccess}} onPress={
                             () => {
                                 setBooks((books) => [...books, textInputData]);
+                                setBooksReading((books) => [...books, textInputData])
                                 setTotalCount((count) => count + 1);
                                 setReadingCount((count) => count + 1);
                                 setIsAddNewBookVisible(false)
-                                setBookData({
-                                    ...bookData,
-                                    author: 'kkdd'
-                                })
                             }
                         }>
                             <Ionicons name='ios-checkmark' color='white' size={40}/>
@@ -73,7 +68,7 @@ export default function HomeScreen() {
                                 <Text>{item}</Text>
                             </View>
                             <CustomActionButton style={{backgroundColor: colors.bgSuccess, width: 100}}
-                                                onPress={({item, index}) => {
+                                                onPress={({selectedBook, index}) => {
                                                     const newList = []
                                                     books.forEach((book) => {
                                                         if (books.indexOf(book) !== index) {
@@ -81,9 +76,18 @@ export default function HomeScreen() {
                                                         }
                                                     })
 
+                                                    const booksReading = []
+                                                    booksReading.forEach((book) => {
+                                                        if (booksReading.indexOf(book) !== index) {
+                                                            newList.push(book);
+                                                        }
+                                                    })
+
                                                     setBooks(newList);
-                                                    setReadingCount((readingCount) => readingCount - 1);
-                                                    setReadCount((readCount) => readCount + 1);
+                                                    setBooksReading(booksReading);
+                                                    setBooksRead([...booksRead, selectedBook])
+                                                    // setReadingCount((readingCount) => readingCount - 1);
+                                                    // setReadCount((readCount) => readCount + 1);
                                                 }
                                                 }>
                                 <Text style={{fontWeight: 'bold', color: 'white'}}
@@ -124,9 +128,9 @@ export default function HomeScreen() {
                 height: 70,
                 flexDirection: 'row'
             }}>
-                <BookCount title='Total' count={totalCount}/>
-                <BookCount title='Reading' count={readingCount}/>
-                <BookCount title='Read' count={readCount}/>
+                <BookCount title='Total Books' count={books.length}/>
+                <BookCount title='Reading' count={booksReading.length}/>
+                <BookCount title='Read' count={booksRead.length}/>
             </View>
             <SafeAreaView/>
         </View>
