@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, Text, View} from 'react-native';
+import {ActivityIndicator, Text, View, StyleSheet} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import colors from "../../assets/colors";
 import CustomActionButton from "../../components/CustomActionButton";

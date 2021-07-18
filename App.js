@@ -10,6 +10,7 @@ import {firebaseConfig} from "./config/config";
 import firebase from "firebase/app";
 import LoginScreen from "./screens/LoginScreen";
 import LoadingScreen from "./screens/AppSwitchNavigator/LoadingScreen";
+import colors from "./assets/colors";
 
 export default function App() {
 
@@ -25,7 +26,7 @@ export default function App() {
 };
 
 const initializeFirebaseApp = () => {
-    firebase.intializeApp(firebaseConfig)
+    firebase.initializeApp(firebaseConfig)
 }
 
 const LoginStackNavigator = createStackNavigator({
