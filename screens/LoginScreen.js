@@ -24,7 +24,7 @@ export default function LoginScreen() {
                 }
             } catch (error) {
                 setIsLoading(false)
-                if (error.code === 'auth/email-alredy-in-use') {
+                if (error.code === 'auth/email-already-in-use') {
                     alert('User already exists. Try logging in again')
                 }
             }
